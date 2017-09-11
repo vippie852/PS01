@@ -1,0 +1,40 @@
+---
+title: "STAT/MATH 495: Problem Set 01"
+author: "Vickie Ip"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    collapsed: false
+    smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width=8, fig.height=4.5)
+
+library(tidyverse)
+
+train <- read_csv("https://rudeboybert.github.io/STAT495/static/Titanic/train.csv")
+test <- read_csv("https://rudeboybert.github.io/STAT495/static/Titanic/test.csv")
+submission <- read_csv("https://rudeboybert.github.io/STAT495/static/Titanic/gender_submission.csv")
+
+glimpse(train)
+glimpse(test)
+glimpse(submission)
+
+View(train)
+View(test)
+View(submission)
+
+
+test %>%
+  left_join(submission, by="PassengerId") 
+  test$Survived[test$Pclass == 3] <- 0 
+  test$Survived[test$Pclass < 3] <- 1
+sub <-select(test,PassengerId, Survived)
+write.csv(sub,"submission.csv",row.names = FALSE)
+```
+
+
